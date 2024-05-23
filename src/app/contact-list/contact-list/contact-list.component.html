@@ -1,0 +1,97 @@
+<div class="container mx-auto max-w-md p-4 bg-white  sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+    <div class="flex items-center justify-center mb-4 bg-gray-200 py-3">
+        <h5 class="text-lg font-bold leading-none text-gray-700 dark:text-white">Bonjour <span class="text-orange-400">{{ user.name | titlecase}}</span></h5>
+        
+   </div>
+    <div class="flex items-center justify-between mb-4">
+        <h5 class="text-sm leading-none text-gray-500 dark:text-white">{{"mes contacts" | titlecase}}</h5>
+        <button class="underline text-gray-500" (click)="logout()"> se deconnecter </button>
+   </div>
+   
+    <div class=" inline-flex mx-auto my-3 px-3">
+        <select 
+        class="border rounded-s-full border-e-0 ring-1 ring-inset ring-gray-300 focus:ring-gray-600"
+        #teams (change)="onSelected(teams.value)">
+            <option default>nom</option>
+            <option>telephone</option>
+            <option>Email</option>
+        </select>
+        <input class="border rounded-e-full ring-1 ring-inset ring-gray-300 focus:ring-gray-600"
+        *ngIf="filterBy === 'nom'" type="text" placeholder="saisissez un nom" [(ngModel)]="contactFilter.name">
+        <input class="border rounded-e-full focus:border-0"
+        *ngIf="filterBy === 'telephone'" type="tel" placeholder="saisissez un numero" [(ngModel)]="contactFilter.telephone">
+        <input class="border rounded-e-full focus:border-0"
+        *ngIf="filterBy === 'Email'" type='email' placeholder="saisissez un mail" [(ngModel)]="contactFilter.mail">
+             
+    </div>
+
+   <div class="flex justify-around my-1 text-gray-500">
+        
+        <div class=" text-lg flex-1 min-w-0 px-2 py-1">
+            <p class="inline-flex items-center me-2">
+                Trier: 
+            </p>
+            <button class="inline-flex items-center me-2 border shadow-lg rounded-full" (click)="sortContactsAsc()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z"/>
+                </svg>
+            </button>
+            
+            <button  class="inline-flex items-center" (click)="sortContactsDesc()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
+                </svg>
+            </button>
+        </div>
+        <div class="hover:shadow-md border shadow-sm rounded-full px-2 py-1 text-base font-semibold text-gray-500 dark:text-white">
+            <a routerLink="/nouveauContact" class="inline-flex items-center">
+                <span>ajout</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                </svg> 
+            </a>
+            
+        </div>
+    </div>
+    <hr>
+   <div class="flow-root">
+        <ul *ngIf="contacts && contacts.length !== 0 else blankContact"
+        role="list" class="divide-y dark:divide-gray-700">
+            <li *ngFor="let contact of contacts  "
+             class="group py-2 px-4 bg-gray-80  shadow-md rounded-md border border-gray-200 my-2">
+                <div class="flex justify-around">
+                    <div class="flex-1 min-w-0 ">
+                        <p class="text-lg font-medium text-orange-400 truncate dark:text-white">
+                            {{contact.name}}
+                        </p>
+                        <p class="text-sm font-medium text-gray-600 truncate dark:text-white">
+                            {{contact.telephone}}
+                        </p>
+                        <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                            {{contact.mail}}
+                        </p>
+                    </div>
+                    <div class="overflow-hidden group-hover:overflow-visible inline-flex items-center text-base font-semibold text-gray-500 dark:text-white">
+                        <a class="me-3"
+                        routerLink="/modifierContact/{{contact.id}}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                              </svg>
+                        </a>
+                        <button *ngIf="contact.id !== undefined" (click)="deleteContact(contact.id)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                              </svg>
+                        </button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <ng-template #blankContact>
+            <div class="flex items-center justify-center text-gray-500 mb-4  py-5">
+                <a class="underline me-2 text-gray-700" routerLink="/nouveauContact">Ajouter </a>  votre premier contact!
+            </div>
+           
+          </ng-template>
+   </div>
+</div>
