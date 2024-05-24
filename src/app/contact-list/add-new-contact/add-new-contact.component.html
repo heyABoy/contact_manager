@@ -1,7 +1,10 @@
 
 <div class="container mx-auto max-w-md p-4 bg-white  sm:p-8 dark:bg-gray-800 dark:border-gray-700">     
     <div class="flex w-full min-h-full flex-col justify-center px-6  lg:px-8">
-      <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+      <div class="w-full sm:mx-auto sm:w-full sm:max-w-sm">
+        <a routerLink="/">
+          retour
+        </a>
         <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Ajouter un contact</h2>
       </div>
   
@@ -9,6 +12,10 @@
         <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="space-y-6">
             <div>
                 <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Nom</label>
+                <div *ngIf="contactForm.controls['name'].invalid && (contactForm.controls['name'].dirty || contactForm.controls['name'].touched)"
+                class="text-red-700 text-sm">
+                  minimum 4 caractere
+                </div>
                 <div class="mt-2">
                   <input placeholder="nom du contact" formControlName="name"
                     id="name" type="text" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6">
@@ -17,6 +24,10 @@
 
           <div>
             <label for="telephone" class="block text-sm font-medium leading-6 text-gray-900">Telephone </label>
+            <div *ngIf="contactForm.controls['telephone'].invalid && (contactForm.controls['telephone'].dirty || contactForm.controls['telephone'].touched)"
+            class="text-red-700 text-sm">
+              saisissez un numero de telephone valid
+            </div>
             <div class="mt-2">
               <input placeholder="Numero de telephone" formControlName="telephone"
                 id="telephone" type="tel" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6">
@@ -25,7 +36,11 @@
   
           <div>
             <div class="flex items-center justify-between">
-              <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Email</label>
+              <label for="mail" class="block text-sm font-medium leading-6 text-gray-900">Email</label>
+            </div>
+            <div *ngIf="contactForm.controls['mail'].invalid && (contactForm.controls['mail'].dirty || contactForm.controls['mail'].touched)"
+            class="text-red-700 text-sm">
+              saisissez une adresse mail valid
             </div>
             <div class="mt-2">
               <input placeholder="adress mail du contact" formControlName="mail"
@@ -34,7 +49,11 @@
           </div>
   
           <div >
-            <button 
+            <div *ngIf="contactForm.invalid && ( (contactForm.controls['telephone'].dirty || contactForm.controls['telephone'].touched) || (contactForm.controls['mail'].dirty || contactForm.controls['mail'].touched) || (contactForm.controls['name'].dirty || contactForm.controls['name'].touched))"
+            class="text-red-700 text-sm">
+              Verifier les informations de contact
+            </div>
+            <button [class.cursor-not-allowed]="contactForm.invalid"
             type="submit" class="flex justify-center w-full rounded-md bg-gray-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">ajouter</button>
           </div>
         </form>

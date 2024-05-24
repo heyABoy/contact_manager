@@ -7,7 +7,11 @@
       <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="space-y-6">
             <div>
-                <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Nom</label>
+                <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Nom*</label>
+                <div *ngIf="userForm.controls['name'].invalid && (userForm.controls['name'].dirty || userForm.controls['name'].touched)"
+                class="text-red-700 text-sm">
+                  minimum 4 caractere
+                </div>
                 <div class="mt-2">
                   <input placeholder="votre nom" formControlName="name"
                     id="name" type="text" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6">
@@ -15,7 +19,11 @@
             </div>
 
           <div>
-            <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email </label>
+            <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Adress mail* </label>
+            <div *ngIf="userForm.controls['mail'].invalid && (userForm.controls['mail'].dirty || userForm.controls['mail'].touched)"
+            class="text-red-700 text-sm">
+              saisissez une adresse mail valid
+            </div>
             <div class="mt-2">
               <input placeholder="adress mail" formControlName="mail"
                 id="email" type="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6">
@@ -24,7 +32,11 @@
   
           <div>
             <div class="flex items-center justify-between">
-              <label for="password" class="block text-sm font-medium leading-6 text-gray-900">mot de pass</label>
+              <label for="password" class="block text-sm font-medium leading-6 text-gray-900">mot de pass*</label>
+            </div>
+            <div *ngIf="userForm.controls['password'].invalid && (userForm.controls['password'].dirty || userForm.controls['password'].touched)"
+            class="text-red-700 text-sm">
+              minimum 4 caractere
             </div>
             <div class="mt-2">
               <input placeholder="mot de pass" formControlName="password"
@@ -33,7 +45,11 @@
           </div>
   
           <div >
-            <button 
+            <div *ngIf="userForm.invalid && ( (userForm.controls['password'].dirty || userForm.controls['password'].touched) || (userForm.controls['mail'].dirty || userForm.controls['mail'].touched) || (userForm.controls['name'].dirty || userForm.controls['name'].touched))"
+          class="text-red-700 text-sm">
+            Verifier vos coordonées
+          </div>
+            <button [class.cursor-not-allowed]="userForm.invalid"
             type="submit" class="flex justify-center w-full rounded-md bg-gray-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">s'inscrire</button>
           </div>
         </form>

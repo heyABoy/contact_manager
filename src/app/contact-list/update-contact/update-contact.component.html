@@ -1,12 +1,30 @@
 <div class="container mx-auto max-w-md p-4 bg-white  sm:p-8 dark:bg-gray-800 dark:border-gray-700">     
     <div class="flex w-full min-h-full flex-col justify-center px-6  lg:px-8">
       <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+        <a routerLink="/">
+          retour
+        </a>
         <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Modifier contact</h2>
       </div>
   
       <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form #updateContact="ngForm" (ngSubmit)="onSubmit(updateContact)" class="space-y-6">
-            <div>
+          <div class="group py-2 px-4 bg-gray-80  shadow-md rounded-md border border-gray-200 my-2">
+            <div class="flex justify-around">
+                <div class="flex-1 min-w-0 ">
+                    <p class="text-lg font-medium text-orange-400 truncate dark:text-white">
+                        {{name}}
+                    </p>
+                    <p class="text-sm font-medium text-gray-600 truncate dark:text-white">
+                        {{telephone}}
+                    </p>
+                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                        {{mail}}
+                    </p>
+                </div>
+            </div>
+          </div>
+          <div>
                 <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Nom</label>
                 <div class="mt-2">
                   <input [placeholder]="name" name="name" [(ngModel)]="name"

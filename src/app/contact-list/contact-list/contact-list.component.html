@@ -57,7 +57,7 @@
    <div class="flow-root">
         <ul *ngIf="contacts && contacts.length !== 0 else blankContact"
         role="list" class="divide-y dark:divide-gray-700">
-            <li *ngFor="let contact of contacts  "
+            <li *ngFor="let contact of contacts  | filterBy: contactFilter"
              class="group py-2 px-4 bg-gray-80  shadow-md rounded-md border border-gray-200 my-2">
                 <div class="flex justify-around">
                     <div class="flex-1 min-w-0 ">

@@ -22,9 +22,9 @@ export class SignUpComponent {
     private route: ActivatedRoute
   ) {
     this.userForm = this.fb.group({
-      name: ['', Validators.required],
-      password: ['', Validators.required],
-      mail: ['', Validators.required] 
+      name: ['', [Validators.required, Validators.minLength(4)]],
+      password: ['',[ Validators.required, Validators.minLength(4)]],
+      mail: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]]
     });
   }
 

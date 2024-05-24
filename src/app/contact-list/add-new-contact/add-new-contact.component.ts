@@ -23,9 +23,9 @@ export class AddNewContactComponent {
     private route: ActivatedRoute
   ) {
     this.contactForm = this.fb.group({
-      name: ['', Validators.required],
-      telephone: ['', Validators.required],
-      mail: ['', Validators.required]
+      name: ['', [Validators.required, Validators.minLength(4)]],
+      telephone: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{9,}$")]],
+      mail: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]]
     });
   }
 
